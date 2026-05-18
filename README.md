@@ -66,6 +66,7 @@ Save
 Save
 38$0
 LinkedIn: https://www.linkedin.com/in/asibubernard/  
-Email: asibubernard@gmail.com / eboasibu@gmail/
+
+Email: asibubernard@gmail.com / eboasibu@gmail.com / # choose this 
 
 #AnalyticsEngineering #dbt #DataPipeline #RemoteJobs #HealthcareData #Relocation #VisaSponsorship #DataEngineering
