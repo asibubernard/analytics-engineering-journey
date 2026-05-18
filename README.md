@@ -59,6 +59,12 @@ SQL → dbt → Airbyte → Prefect → BigQuery → orchestration → productio
 Open to remote Analytics Engineer roles — especially in healthcare, insurance, Pharmacy, or data-driven companies.  
 Happy to discuss projects, share code, or chat about opportunities!
 
+
+Save
+38$0
+
+Save
+38$0
 LinkedIn: https://www.linkedin.com/in/asibubernard/  
 Email: asibubernard@gmail.com  
 
