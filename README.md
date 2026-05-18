@@ -1,7 +1,7 @@
 # analytics-engineering-journey
 My Analytics Engineering learning journey with dbt, BigQuery, and healthcare data
 
-# Analytics Engineering Portfolio
+# Analytics Engineering Portfolio (Health Information )
 
 Hi! I'm Bernard Asibu from Ghana.
 
