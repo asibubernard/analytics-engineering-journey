@@ -48,11 +48,46 @@ SQL → dbt → Airbyte → Prefect → BigQuery → orchestration → productio
 
 **What I did:**  
 - Wrote and optimized queries
-- 
+
+
+
 <img width="1919" height="1042" alt="Screenshot 2026-03-19 102606" src="https://github.com/user-attachments/assets/00eed097-a50f-4676-84ef-b39e958de69f" />
 <img width="945" height="1028" alt="Screenshot 2026-04-07 094434" src="https://github.com/user-attachments/assets/b169ef8d-2621-46a6-bfb6-e9d7dab65032" />
 <img width="958" height="948" alt="Screenshot 2026-03-31 105947" src="https://github.com/user-attachments/assets/edbd1d15-7f7d-4191-8454-7c7d93085b41" />
 <img width="950" height="941" alt="Screenshot 2026-03-25 082029" src="https://github.com/user-attachments/assets/49a8b5ae-22f7-4d13-b631-555ad9f8a085" />
+
+### Week 4: Git and Version Control 
+**What I learned:** 
+- Learned branches
+- PRs
+- Merge conflicts 
+- Merged first PR
+
+### Week 5–6: Data Modeling Fundamentals
+**What I learned:** 
+- Star schema (fact & dimension tables) – mental model: library logbook
+- Medallion layers (bronze → silver → gold) – mental model: kitchen pantry
+- dbt project layers: staging (foundation), intermediate (frame), marts (furnished rooms)
+- Difference between ref() and source()
+- Writing tests with schema.yml and generating documentation with dbt docs
+
+**What I did:**  
+- Built a complete Jaffle Shop pipeline from raw CSV seeds to a daily sales mart
+- Applied the same patterns to a public healthcare dataset (CMS SynPUF / OMOP) to create a health analytics pipeline
+- Added data quality tests (not_null, unique) and generated a lineage graph
+
+**Jaffle Shop Models**  
+- Staging: stg_orders, stg_customers, stg_items
+- Intermediate: int_order_details
+- Mart: mart_daily_sales
+
+**Healthcare models (bonus sprint)**  
+- Staging: stg_person, stg_visit_occurrence
+- Intermediate: int_patient_visits
+- Mart: mart_patient_cost_summary
+
+**Tech used:**
+dbt Core (Bigquery adapter), Google Bigquery sandbox, Git & Github
 
 
 ## Let's Connect

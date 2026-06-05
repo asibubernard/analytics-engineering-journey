@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_condition_occurrence
+    description: "Cleaned staging data for patient clinical diagnoses."
+    columns:
+      - name: condition_occurrence_id
+        tests:
+          - unique
+          - not_null
+      - name: patient_id
+        tests:
+          - not_null
+
+  - name: int_diagnosis_costs
+    description: "Intermediate table tying diagnosis records to their respective encounter costs."
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+
+  - name: mart_diagnosis_cost_summary
+    description: "The final gold-layer mart summarizing total insurance payments grouped by clinical diagnosis."
+    columns:
+      - name: diagnosis_name
+        tests:
+          - not_null
+      - name: patient_count
+        tests:
+          - not_null

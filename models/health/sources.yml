@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: cms_omop
+    database: bigquery-public-data
+    schema: cms_synthetic_patient_data_omop
+    tables:
+      - name: person 
+      - name: procedure_occurrence # (fact-replace visit_occurrence)
+      - name: condition_occurrence  # fact
+      - name: cost # fact, filtered to procedure domain (cost for procedure)
+      - name: concept # dimension (this is going to give names)
+ 
