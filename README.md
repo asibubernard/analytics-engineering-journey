@@ -88,6 +88,8 @@ SQL → dbt → Airbyte → Prefect → BigQuery → orchestration → productio
 
 **Tech used:**
 dbt Core (Bigquery adapter), Google Bigquery sandbox, Git & Github
+<img width="953" height="482" alt="mart_diagnosis_cost_summary" src="https://github.com/user-attachments/assets/ffa9598c-408b-4ee2-a535-72a58d31822a" />
+<img width="941" height="441" alt="mart" src="https://github.com/user-attachments/assets/ffff0e7f-3905-4cd9-9acd-baa53b5184bb" />
 
 
 ## Let's Connect
@@ -95,11 +97,6 @@ Open to remote Analytics Engineer roles — especially in healthcare, insurance,
 Happy to discuss projects, share code, or chat about opportunities!
 
 
-Save
-38$0
-
-Save
-38$0
 LinkedIn: https://www.linkedin.com/in/asibubernard/  
 
 
