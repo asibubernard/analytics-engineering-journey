@@ -1,0 +1,13 @@
+version: 2
+
+exposures:
+  - name: diagnosis_cost_dashboard
+    type: dashboard
+    url: https://looker.com/dashboards/1
+    description: "Top diagnoses by total cost - used by finance and clinical ops"
+    depends_on:
+      - ref('mart_diagnosis_cost_summary')
+    owner:
+      name: Bernard Asibu
+      email: asibubernard@gmail.com
+      
