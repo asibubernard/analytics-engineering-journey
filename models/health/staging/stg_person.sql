@@ -6,6 +6,7 @@ renamed as (
     select 
         person_id as patient_id,
         year_of_birth,
+        {{ mask_phi('person_id') }},
         month_of_birth,
         gender_concept_id,
         ethnicity_concept_id

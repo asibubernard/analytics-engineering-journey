@@ -1,6 +1,15 @@
+{{ config(
+    materialized='incremental',
+    unique_key='cost_id',
+)}}
+
 with source as (
     select * from {{ source('cms_omop', 'cost') }}
+    {% if is_incremental() %}
+    where cost_id > (select max(cost_id) from {{ this }})
+    {% endif %}
 ), 
+
 renamed as (
     select 
         cost_id,
