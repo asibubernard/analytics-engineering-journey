@@ -88,7 +88,7 @@ SQL → dbt → Airbyte → Prefect → BigQuery → orchestration → productio
 
 **Tech used:**
 dbt Core (Bigquery adapter), Google Bigquery sandbox, Git & Github
-URL: https://asibubernard.github.io/analytics-engineering-journey/
+URL: https://asibubernard.github.io/analytics-engineering-journey/#!/overview
 
 <img width="953" height="482" alt="mart_diagnosis_cost_summary" src="https://github.com/user-attachments/assets/ffa9598c-408b-4ee2-a535-72a58d31822a" />
 <img width="941" height="441" alt="mart" src="https://github.com/user-attachments/assets/ffff0e7f-3905-4cd9-9acd-baa53b5184bb" />

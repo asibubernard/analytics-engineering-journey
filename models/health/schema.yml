@@ -11,6 +11,34 @@ models:
       - name: patient_id
         tests:
           - not_null
+  
+  - name: stg_person
+    columns: 
+      - name: patient_id
+        tests:
+          - unique
+          - not_null
+      - name: year_of_birth
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 1900
+                max_value: 2026
+
+  - name: stg_cost
+    columns:
+      - name: total_paid
+        tests:
+          - dbt_expectations.expect_column_values_to_not_be_null
+  
+  # - name: int_visit_costs
+  #   columns:
+  #     - name: length_of_stay_days
+  #       tests:
+  #         - dbt_expectations.expect_column_values_to_be_between:
+  #             arguments:
+  #               min_value: 0
+  #               max_value: 365
 
   - name: int_diagnosis_costs
     description: "Intermediate table tying diagnosis records to their respective encounter costs."
@@ -20,9 +48,21 @@ models:
           - not_null
 
   - name: mart_diagnosis_cost_summary
-    description: "The final gold-layer mart summarizing total insurance payments grouped by clinical diagnosis."
+    description: "Top diagnoses by total paid amount"
+    config:
+      contract:
+        enforced: true
     columns:
       - name: diagnosis_name
+        data_type: string
+        constraints:
+          - type: not_null
+      - name: patient_count
+        data_type: int64
+      - name: total_paid
+        data_type: float64
+      - name: avg_paid_per_encounter
+        data_type: float64
         tests:
           - not_null
       - name: patient_count
