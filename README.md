@@ -149,7 +149,7 @@ URL: https://asibubernard.github.io/analytics-engineering-journey/#!/overview
   - `stg_fhir_patients`, `stg_fhir_encounters`, `stg_fhir_conditions`
 - Applied data tests (`not_null`, `unique`, `accepted_values`, `relationships`) across both pipelines
 - Ensured all models passed and generated a unified dbt docs lineage graph showing both data sources.
-
+<img width="1564" height="954" alt="airbyte_Annotation 2026-07-16 101826" src="https://github.com/user-attachments/assets/415a1bd8-8f66-448a-8375-215d3e56bc20" />
 ## Week 12: Orchestration & Scheduling with Prefect
 
 **What I Learned**
