@@ -1,0 +1,198 @@
+version: 2
+
+sources:
+  - name: raw_synthea
+    database: health-dbt-portfolio
+    schema: raw_synthea 
+    description: "Source data from Synthea, a synthetic patient generator. This dataset includes raw tables for patients, encounters, conditions, procedures, and providers."
+    config:
+      freshness:
+        warn_after: {count: 1, period: day}
+        error_after: {count: 7, period: day}
+      loaded_at_field: load_timestamp # Timestamp when data was loaded into the warehouse
+
+    tables:
+      - name: patients_raw
+        columns:
+          - name: id
+            description: "Primary key for the patients table"
+            data_tests:
+              - not_null
+              - unique
+          - name: birthdate
+            description: "Date of birth for each patient."
+            data_tests:
+              - not_null
+
+      - name: encounters_raw
+        columns:
+          - name: id
+            description: "Primary key for the encounters table"
+            data_tests:
+              - not_null
+              - unique
+          - name: patient
+            description: "Foreign key linking back to patient."
+            data_tests:
+              - not_null
+          - name: provider
+            description: "Foreign key linking to provider."
+            data_tests:
+              - not_null
+          - name: organization
+            description: "Foreign key linking to specific organization."
+            data_tests:
+              - not_null
+          - name: encounterclass
+            description: "This shows the type of data service patient received."
+            data_tests:
+              - accepted_values:
+                  values: ['wellness', 'ambulatory', 'outpatient', 'inpatient', 'emergency']
+      
+      - name: conditions_raw
+        columns:
+          - name: encounter
+            description: "Foreign key linking to the encounters table."
+            data_tests:
+              - not_null
+      
+      - name: procedures_raw
+        columns:
+          - name: patient
+            description: "Foreign key linking to the patient."
+            data_tests:
+              - not_null
+          - name: encounter
+            description: "Foreign key linking back to the specific hospital visit."
+            data_tests:
+              - not_null
+
+      - name: providers_raw
+        columns:
+          - name: patient
+            description: "Foreign key linking back to the patient."
+            data_tests:
+              - not_null
+              - unique
+          - name: encounter
+            description: "Name of the healthcare provider."
+            data_tests:
+              - not_null
+      
+      - name: medications_raw
+        columns:
+          - name: id
+            description: "Primary key for the medication"
+            data_tests:
+              - not_null
+              - unique
+          - name: encounter
+            description: "Foreign key linking back to the specific encounter."
+            data_tests:
+              - not_null
+        
+      - name: observations_raw
+        columns:
+          - name: id
+            description: "Primary key for the observations table."
+            data_tests:
+              - not_null
+              - unique
+          - name: encounter
+            description: "Foreign key linking to a specific encounter."
+            data_tests:
+              - not_null
+      
+      - name: immunizations_raw
+        columns:
+          - name: id
+            description: "Primary key for the immunizations."
+            data_tests:
+              - not_null
+              - unique
+          - name: encounter
+            description: "Foreign key linking back a specific encounter."
+            data_tests:
+              - not_null
+      
+      - name: careplans_raw
+        columns: 
+          - name: id
+            description: "Primary key for the careplans."
+            data_tests:
+              - not_null
+              - unique
+          - name: patient
+            description: "Foreign key linking back a specific patient."
+            data_tests:
+              - not_null
+          - name: encounter
+            description: "Foreign key linking back a specific encounter."
+            data_tests:
+              - not_null
+
+      - name: devices_raw
+        columns:
+          - name: id
+            description: "Primary key for the devices table."
+            data_tests:
+              - not_null
+              - unique
+          - name: encounter
+            description: "Foreign key linking back a specific encounter."
+            data_tests:
+              - not_null
+
+      - name: claims_raw
+        columns:  
+          - name: id
+            description: "Primary key for the claims table."
+            data_tests:
+              - not_null
+              - unique
+          - name: status1
+            description: "The status of the claim with primary insurance provider."
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ['paid', 'denied', 'submitted', 'rejected']
+          - name: status2
+            description: "The status of the claim with secondary insurance provider."
+            data_tests: 
+              - accepted_values:
+                  arguments:
+                    values: ['paid', 'denied', 'submitted', 'rejected']   
+          - name: statusp
+            description: "The status of the patient out-of-pocket balance."
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['billed', 'paid', 'uncollectible']
+  
+  - name: airbyte_internal
+    database: health-dbt-portfolio
+    schema: airbyte_internal
+    description: "Source data from Airbyte, an open-source data integration platform. This dataset includes raw tables for Airbyte's internal metadata and state information."
+    config:
+      freshness:
+        warn_after: {count: 1, period: day}
+        error_after: {count: 7, period: day}
+      loaded_at_field: load_timestamp # Timestamp when data was loaded into the warehouse
+
+    tables:
+      - name: connections_raw
+        columns:
+          - name: connection_id
+            description: "Primary key for the connections table"
+            data_tests:
+              - not_null
+              - unique
+          - name: source_id
+            description: "Foreign key linking to the source."
+            data_tests:
+              - not_null
+          - name: destination_id
+            description: "Foreign key linking to the destination."
+            data_tests:
+              - not_null
