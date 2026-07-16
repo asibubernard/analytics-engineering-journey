@@ -52,7 +52,6 @@ SQL → dbt → Airbyte → Prefect → BigQuery → orchestration → productio
 
 
 <img width="1919" height="1042" alt="Screenshot 2026-03-19 102606" src="https://github.com/user-attachments/assets/00eed097-a50f-4676-84ef-b39e958de69f" />
-<img width="945" height="1028" alt="Screenshot 2026-04-07 094434" src="https://github.com/user-attachments/assets/b169ef8d-2621-46a6-bfb6-e9d7dab65032" />
 <img width="958" height="948" alt="Screenshot 2026-03-31 105947" src="https://github.com/user-attachments/assets/edbd1d15-7f7d-4191-8454-7c7d93085b41" />
 <img width="950" height="941" alt="Screenshot 2026-03-25 082029" src="https://github.com/user-attachments/assets/49a8b5ae-22f7-4d13-b631-555ad9f8a085" />
 
@@ -93,6 +92,81 @@ URL: https://asibubernard.github.io/analytics-engineering-journey/#!/overview
 <img width="953" height="482" alt="mart_diagnosis_cost_summary" src="https://github.com/user-attachments/assets/ffa9598c-408b-4ee2-a535-72a58d31822a" />
 <img width="941" height="441" alt="mart" src="https://github.com/user-attachments/assets/ffff0e7f-3905-4cd9-9acd-baa53b5184bb" />
 
+## Week 7–8: Intro to dbt & Basic Commands
+
+**What I Learned**
+- The core dbt workflow: `dbt run`, `dbt test`, `dbt docs generate`, `dbt build`
+- How to define sources (`sources.yml`) so dbt knows where raw data lives
+- The difference between view, table, and incremental materialisations
+- How to add generic data tests (`not_null`, `unique`, `relationships`) in `schema.yml`
+- How to generate and host dbt documentation on GitHub Pages
+
+**What I Built**
+- Completed the official **Jaffle Shop** tutorial with 3 staging models, 1 intermediate model, and 1 mart
+- Added a `sources.yml` file and applied `not_null` and `unique` tests on primary keys
+- Hosted the dbt docs site via the `gh-pages` branch and linked it in the repo
+- Practiced a full Git workflow: feature branch → PR → merge after code review
+
+## Week 9–10: dbt Mastery
+
+**What I Learned**
+- How to write **Jinja macros** to avoid repeating SQL (DRY principle)
+- How to pass **arguments** to macros and return dynamic SQL
+- How to use **community packages** (`dbt_utils`, `dbt_expectations`) for advanced tests
+- The difference between generic, singular, and custom package tests
+- How **incremental models** work and when to use them (merge strategy, `is_incremental()`)
+- How to generate dynamic SQL with **Jinja loops** (e.g. monthly pivot tables)
+- What a **model contract** is and how it enforces column types and nullability
+
+**What I Built**
+- 4 custom macros: `audit_columns`, `mask_phi` (PHI hashing), `categorize_diagnosis` (ICD‑10 categories), `date_spine`
+- Increased the test suite from 6 to **15+ tests**, including:
+  - `dbt_expectations.expect_column_values_to_be_between` (birth year, stay length)
+  - `dbt_expectations.expect_column_values_to_not_be_null` (cost columns)
+  - A **custom singular test** to detect null condition codes
+  - Referential integrity tests (`relationships`) between related tables
+- Converted `stg_cost` to an **incremental model** (`unique_key='cost_id'`, BigQuery‑compatible)
+- Created a **Jinja loop model** that pivots monthly procedure counts by patient
+- Enforced a **model contract** on `mart_diagnosis_cost_summary` (guaranteed types and not‑null)
+- Updated dbt docs and pushed the refreshed lineage graph to GitHub Pages
+
+## Week 11: Full Modern Stack – Ingestion with Airbyte + Python Script (Synthea + FHIR)
+
+**What I Learned**
+- How ELT works end‑to‑end: **Extract** (source), **Load** (BigQuery), **Transform** (dbt)
+- How to bring external data into BigQuery using **Airbyte Cloud** (as well as custom Python scripts)
+- How to configure Airbyte sources (CSV files, FHIR endpoints) and destinations (BigQuery)
+- The difference between relational (CSV) and hierarchical (FHIR) healthcare data formats
+- How to handle raw data schemas (`raw_synthea`, `raw_fhir`) and define them as dbt sources
+- The principle of keeping raw data **untouched** and only transforming it in staging models
+
+**What I Built**
+- Ingested **Synthea synthetic patient data** (patients, encounters, conditions, procedures) into BigQuery via Airbyte and python.
+- Additionally ingested **FHIR‑formatted patient data** (e.g., Patient, Encounter, Condition resources) into a separate raw dataset
+- Defined dbt sources for both `raw_synthea` and `raw_fhir` in `sources.yml`
+- Built staging models for both data sources, including:
+  - `stg_synthea_patients`, `stg_synthea_encounters`, `stg_synthea_conditions`, `stg_synthea_procedures`
+  - `stg_fhir_patients`, `stg_fhir_encounters`, `stg_fhir_conditions`
+- Applied data tests (`not_null`, `unique`, `accepted_values`, `relationships`) across both pipelines
+- Ensured all models passed and generated a unified dbt docs lineage graph showing both data sources.
+
+## Week 12: Orchestration & Scheduling with Prefect
+
+**What I Learned**
+- Why we need **orchestration**: to automate multi‑step pipelines (ingestion → transformation → notification)
+- The concept of a **DAG** (Directed Acyclic Graph) – tasks that run in order with dependencies
+- How to use **Prefect** (Python library + cloud UI) to schedule, retry, and monitor workflows
+- How to integrate Prefect with dbt Cloud jobs and Airbyte connections
+- The value of **alerts** (Slack/email) when pipeline runs fail or succeed
+
+**What I Built**
+- A Prefect flow with three tasks:
+  1. Trigger Airbyte sync (ingest fresh Synthea data)
+  2. Run `dbt build` (all models + tests)
+  3. Send a Slack notification on success
+- Added **retries** and **scheduling** (daily run) to the flow
+- Logged flow runs and captured a screenshot of the DAG in the Prefect UI
+- Committed the flow code (`flows/health_pipeline.py`) and updated `requirements.txt`
 
 ## Let's Connect
 Open to remote Analytics Engineer roles — especially in healthcare, insurance, Pharmacy, or data-driven companies.  
